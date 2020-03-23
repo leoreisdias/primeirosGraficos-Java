@@ -14,7 +14,7 @@ public class Game extends Canvas implements Runnable {
 
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		frame = new JFrame("Game 1");
+		frame = new JFrame("Janela Inicial");
 		frame.add(this);
 		frame.setResizable(false);
 		frame.pack();
