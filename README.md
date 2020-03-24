@@ -9,7 +9,7 @@ JFrame trabalha com essas propriedades e pode gerenciar funcionalidades básicas
 ```
 
 ## Contagem de FPS
-```
+
 * A contagem de FPS para melhor precisão é feita simulando nano segundos.
 * A cada "NS" segundos será contado um Frame
 * Delta armazena o tempo em nano segundos decorrido até alcançar o NS
@@ -17,4 +17,3 @@ JFrame trabalha com essas propriedades e pode gerenciar funcionalidades básicas
 * Delta decrementa para iniciar reiniciar o processo
 
 A cada 1 segundo é exibido em tela os frames objetivados.
-```
