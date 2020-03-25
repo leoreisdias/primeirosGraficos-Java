@@ -17,3 +17,13 @@ JFrame trabalha com essas propriedades e pode gerenciar funcionalidades básicas
 * Delta decrementa para iniciar reiniciar o processo
 
 A cada 1 segundo é exibido em tela os frames objetivados.
+
+## Graficos na Janela
+
+Cria-se uma imagem com o tipo de colorização e tamanho.
+
+Recebo com os graficos a imagem e caracteristicas para tudo que fizer em seguida ser para desenhar nela como formatos e colorização.
+
+É renderizado na janela o que foi definido a partir da imagem, indicando como paramêtro a imagem a ser renderizada, offset e dimensões de altura e largura do quanto redimensionar.
+
+BufferStrategy tem como objetivo dar conexto grafico ao objeto da classe Grafico em busca de performance gráfica.

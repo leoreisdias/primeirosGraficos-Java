@@ -1,7 +1,12 @@
 package graficos;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
@@ -10,13 +15,16 @@ public class Game extends Canvas implements Runnable {
 	public static JFrame frame;
 	private Thread thread;
 	private boolean isRunning = true;
-	private final int WIDTH = 160;
-	private final int HEIGHT = 120;
+	private final int WIDTH = 240;
+	private final int HEIGHT = 160;
 	private final int SCALE = 3;
+
+	private BufferedImage image;
 
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		initFrame();
+		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
 	}
 
@@ -37,7 +45,12 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public synchronized void stop() {
-
+		isRunning = false;
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String args[]) {
@@ -50,7 +63,25 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void render() {
+		BufferStrategy bs = this.getBufferStrategy();
+		if (bs == null) {
+			this.createBufferStrategy(3);
+			return;
+		}
+		Graphics g = image.getGraphics();
 
+		g.setColor(new Color(190, 19, 190));
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+
+		g.setColor(Color.CYAN);
+		g.fillRect(30, 30, 80, 80);
+
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Arial", Font.BOLD, 16));
+		g.drawString("Ola Mundo", 10, 20);
+		g = bs.getDrawGraphics();
+		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
+		bs.show();
 	}
 
 	public void run() {
@@ -77,5 +108,7 @@ public class Game extends Canvas implements Runnable {
 				timer += 1000;
 			}
 		}
+
+		stop();
 	}
 }
