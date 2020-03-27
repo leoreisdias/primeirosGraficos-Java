@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -21,7 +22,19 @@ public class Game extends Canvas implements Runnable {
 
 	private BufferedImage image;
 
+	private Spritesheet sheet;
+	private BufferedImage[] player;
+	private int frames = 0;
+	private int maxFrames = 10;
+	private int curAnimation = 0;
+	private int maxAnimation = 2;
+
 	public Game() {
+		sheet = new Spritesheet("/spritesheet.png");
+		player = new BufferedImage[3];
+		player[0] = sheet.getSprite(0, 0, 16, 16);
+		player[1] = sheet.getSprite(16, 0, 16, 16);
+		player[2] = sheet.getSprite(32, 0, 16, 16);
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		initFrame();
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -59,6 +72,14 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void tick() {
+		frames++;
+		if (frames > maxFrames) {
+			frames = 0;
+			curAnimation++;
+			if (curAnimation > maxAnimation) {
+				curAnimation = 0;
+			}
+		}
 
 	}
 
@@ -70,15 +91,15 @@ public class Game extends Canvas implements Runnable {
 		}
 		Graphics g = image.getGraphics();
 
-		g.setColor(new Color(190, 19, 190));
+		g.setColor(new Color(0, 0, 190));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
-		g.setColor(Color.CYAN);
-		g.fillRect(30, 30, 80, 80);
-
-		g.setColor(Color.BLACK);
-		g.setFont(new Font("Arial", Font.BOLD, 16));
-		g.drawString("Ola Mundo", 10, 20);
+		// Renderização do Jogo
+		Graphics2D g2 = (Graphics2D) g;
+		// g2.rotate(Math.toRadians(45), 90 + 8, 90 + 8);
+		g2.drawImage(player[curAnimation], 90, 90, null);
+		// ** */
+		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
 		bs.show();
